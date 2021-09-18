@@ -29,7 +29,7 @@ const App = () => {
           <Header>
             {user.isAuthorize ? <StudentMenu /> : <AuthorizeMenu />}
           </Header>
-          <Content style={{ padding: "0 50px" }}>
+          <Content style={{ padding: "20px 50px" }}>
             <Switch>
               <PrivateRoute path="/cabinet">
                 <Cabinet />
