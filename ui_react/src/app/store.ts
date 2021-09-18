@@ -1,9 +1,14 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
+
+import registrationReducer from "./slice/authorize/registrationSlice";
+import loginReducer from "./slice/authorize/loginSlice";
+import userReducer from "./slice/userSlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    user: userReducer,
+    login: loginReducer,
+    registration: registrationReducer,
   },
 });
 
@@ -15,5 +20,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
-
-// add something
