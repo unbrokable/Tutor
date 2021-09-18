@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutor", "Tutor.csproj", "{255D5AE4-AD7D-4A13-BDD7-1849F459ACC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tutor", "Tutor.csproj", "{255D5AE4-AD7D-4A13-BDD7-1849F459ACC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutor.DAL", "..\Tutor.DAL\Tutor.DAL.csproj", "{AAF00A6A-4C77-4174-8986-6B3461605A17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{255D5AE4-AD7D-4A13-BDD7-1849F459ACC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{255D5AE4-AD7D-4A13-BDD7-1849F459ACC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{255D5AE4-AD7D-4A13-BDD7-1849F459ACC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAF00A6A-4C77-4174-8986-6B3461605A17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAF00A6A-4C77-4174-8986-6B3461605A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAF00A6A-4C77-4174-8986-6B3461605A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAF00A6A-4C77-4174-8986-6B3461605A17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
