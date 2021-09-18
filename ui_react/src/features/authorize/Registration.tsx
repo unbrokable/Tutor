@@ -20,20 +20,24 @@ const Registration = () => {
   return (
     <>
       {authorize ? <Redirect to="/cabinet" /> : null}
-      <Form onFinish={() => dispatch(registrateThunk())}>
-        <Form.Item name="name" label="name" rules={[{ required: true }]}>
+      <Form
+        labelCol={{ span: 2 }}
+        wrapperCol={{ span: 8 }}
+        onFinish={() => dispatch(registrateThunk())}
+      >
+        <Form.Item name="name" label="Name" rules={[{ required: true }]}>
           <Input
             value={state.name}
             onChange={(e) => dispatch(setRegistrationName(e.target.value))}
           />
         </Form.Item>
-        <Form.Item name="email" label="email" rules={[{ required: true }]}>
+        <Form.Item name="email" label="E-mail" rules={[{ required: true }]}>
           <Input
             value={state.email}
             onChange={(e) => dispatch(setRegistrationEmail(e.target.value))}
           />
         </Form.Item>
-        <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
+        <Form.Item name="role" label="Role" rules={[{ required: true }]}>
           <Select
             value={state.role}
             placeholder="Select"
