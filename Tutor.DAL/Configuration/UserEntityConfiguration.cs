@@ -22,10 +22,25 @@ namespace Tutor.DAL.Configuration
                 .HasMaxLength(100);
 
             builder.Property(i => i.Name)
+                .IsRequired()
                 .HasMaxLength(100);
+
+
+            builder.Property(i => i.Surname)
+                .IsRequired()
+                .HasMaxLength(100); 
 
             builder.Property(i => i.Password)
                 .HasMaxLength(100);
+
+            builder.Property(i => i.Education)
+                .HasMaxLength(150);
+
+            builder.Property(i => i.Phone)
+                .IsRequired();
+
+            
+                
         }
     }
 }
