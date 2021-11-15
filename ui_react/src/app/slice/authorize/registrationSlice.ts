@@ -14,7 +14,7 @@ const initialState: RegistrationState = {};
 
 export const registrateAsync = createAsyncThunk(
   "registration/registrate",
-  async (data: RegistrationState) => {
+  async (data: FormData) => {
     const response = await registrate(data);
     return response.data;
   }
@@ -60,12 +60,22 @@ export const {
 export default registrationSlice.reducer;
 export const selectRegistration = (state: RootState) => state.registration;
 
-export const registrateThunk = (): AppThunk => (dispatch, getState) => {
-  const state = selectRegistration(getState());
-  dispatch(registrateAsync(state)).then((a) => {
-    if (a.type.endsWith("fulfilled")) {
-      dispatch(setAuthorize(true));
-      //add role?
+export const registrateThunk =
+  (img: any): AppThunk =>
+  (dispatch, getState) => {
+    const formData = new FormData();
+    formData.append("img", img);
+
+    const state = selectRegistration(getState());
+
+    for (let key of Object.keys(state)) {
+      formData.append(key, (state as any)[key]);
     }
-  });
-};
+
+    dispatch(registrateAsync(formData)).then((a) => {
+      if (a.type.endsWith("fulfilled")) {
+        dispatch(setAuthorize(true));
+        //add role?
+      }
+    });
+  };

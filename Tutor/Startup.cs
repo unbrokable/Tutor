@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tutor.DAL;
 using Tutor.JWT;
+using Tutor.Services;
 
 namespace Tutor
 {
@@ -28,6 +29,7 @@ namespace Tutor
             });
 
             services.AddTransient<IAuthorizationService, AuthorizationService>();
+            services.AddTransient<IImageHandler, AzureImageHandler>();
 
             services.AddAutoMapper(typeof(Startup));
 

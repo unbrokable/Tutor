@@ -8,6 +8,7 @@ using Tutor.DAL;
 using Tutor.DAL.Entities;
 using Tutor.JWT;
 using Tutor.Models.Authorize;
+using Tutor.Services;
 
 namespace Tutor.Controllers
 {
@@ -18,12 +19,14 @@ namespace Tutor.Controllers
         private readonly ApplicationContext _dataBase;
         private readonly IMapper _mapper;
         private readonly IAuthorizationService _authorizationService;
+        private readonly IImageHandler imageHandler;
 
-        public AuthorizeController(ApplicationContext dataBase, IMapper mapper, IAuthorizationService authorizationService)
+        public AuthorizeController(ApplicationContext dataBase, IImageHandler imageHandler, IMapper mapper, IAuthorizationService authorizationService)
         {
             this._dataBase = dataBase;
             this._mapper = mapper;
             this._authorizationService = authorizationService;
+            this.imageHandler = imageHandler;
         }
 
         [HttpPost("login")]
@@ -53,9 +56,11 @@ namespace Tutor.Controllers
         }
 
         [HttpPost("registration")]
-        public async Task<ActionResult> Registration(RegistrationViewModel registration)
+        public async Task<ActionResult> Registration([FromForm]RegistrationViewModel registration)
         {
             var user = _mapper.Map<User>(registration);
+
+            user.Image = await imageHandler.SaveAsync(registration.Img);
 
             await _dataBase
                 .Users

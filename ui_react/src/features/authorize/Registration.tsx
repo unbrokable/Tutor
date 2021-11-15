@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import {
   registrateThunk,
   selectRegistration,
@@ -11,9 +12,11 @@ import {
 import { RoleType, selectUser } from "../../app/slice/userSlice";
 import Password from "antd/lib/input/Password";
 import { Redirect } from "react-router";
+import { useState } from "react";
 
 const { Option } = Select;
 const Registration = () => {
+  const [img, chooseImg] = useState(new File([], ""));
   const dispatch = useAppDispatch();
   const state = useAppSelector(selectRegistration);
   const authorize = useAppSelector(selectUser).isAuthorize;
@@ -23,8 +26,22 @@ const Registration = () => {
       <Form
         labelCol={{ span: 2 }}
         wrapperCol={{ span: 8 }}
-        onFinish={() => dispatch(registrateThunk())}
+        onFinish={() => dispatch(registrateThunk(img))}
       >
+        <Form.Item name="Picture" label="File">
+          <Upload
+            data={img}
+            listType="picture"
+            beforeUpload={(e) => false}
+            onChange={(e) => {
+              chooseImg(e.file.originFileObj as File);
+            }}
+            onRemove={(e) => chooseImg(new File([], ""))}
+            maxCount={1}
+          >
+            <Button icon={<UploadOutlined />}>Upload File</Button>
+          </Upload>
+        </Form.Item>
         <Form.Item name="name" label="Name" rules={[{ required: true }]}>
           <Input
             value={state.name}
