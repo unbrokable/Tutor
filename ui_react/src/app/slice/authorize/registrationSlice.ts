@@ -1,7 +1,7 @@
 import { AppThunk, RootState } from "./../../store";
 import { registrate } from "./../../api/functionsAPI/authorizationAPI";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { setAuthorize } from "../userSlice";
+import { setAuthorize, setRole } from "../AuthorizeSlice";
 
 export interface RegistrationState {
   name?: string;
@@ -75,7 +75,7 @@ export const registrateThunk =
     dispatch(registrateAsync(formData)).then((a) => {
       if (a.type.endsWith("fulfilled")) {
         dispatch(setAuthorize(true));
-        //add role?
+        dispatch(setRole(a.payload.role));
       }
     });
   };

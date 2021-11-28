@@ -1,8 +1,8 @@
 import { Button, Menu } from "antd";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../app/hooks";
-import { jwtService } from "../app/jwtService";
-import { resertUser } from "../app/slice/userSlice";
+import { useAppDispatch } from "./../../app/hooks";
+import { jwtService } from "./../../app/jwtService";
+import { resertUser } from "./../../app/slice/AuthorizeSlice";
 
 const StudentMenu = () => {
   const dispatch = useAppDispatch();

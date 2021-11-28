@@ -9,17 +9,18 @@ import {
   setRegistrationPassword,
   setRegistrationRole,
 } from "../../app/slice/authorize/registrationSlice";
-import { RoleType, selectUser } from "../../app/slice/userSlice";
+
 import Password from "antd/lib/input/Password";
 import { Redirect } from "react-router";
 import { useState } from "react";
+import { RoleType, selectAuthorize } from "../../app/slice/AuthorizeSlice";
 
 const { Option } = Select;
 const Registration = () => {
   const [img, chooseImg] = useState(new File([], ""));
   const dispatch = useAppDispatch();
   const state = useAppSelector(selectRegistration);
-  const authorize = useAppSelector(selectUser).isAuthorize;
+  const authorize = useAppSelector(selectAuthorize).isAuthorize;
   return (
     <>
       {authorize ? <Redirect to="/cabinet" /> : null}

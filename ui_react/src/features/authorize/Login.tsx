@@ -7,12 +7,12 @@ import {
   setEmail,
   setPassword,
 } from "../../app/slice/authorize/loginSlice";
-import { selectUser } from "../../app/slice/userSlice";
+import { selectAuthorize } from "../../app/slice/AuthorizeSlice";
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector(selectLogin);
-  const authorize = useAppSelector(selectUser).isAuthorize;
+  const authorize = useAppSelector(selectAuthorize).isAuthorize;
   return (
     <>
       {authorize ? <Redirect to="/cabinet" /> : null}

@@ -1,7 +1,7 @@
 import { AppThunk, RootState } from "./../../store";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { login } from "../../api/functionsAPI/authorizationAPI";
-import { setAuthorize } from "../userSlice";
+import { setAuthorize, setRole } from "../AuthorizeSlice";
 export interface LoginState {
   email?: string;
   password?: string;
@@ -54,7 +54,7 @@ export const loginThunk = (): AppThunk => (dispatch, getState) => {
   dispatch(loginAsync(state)).then((a) => {
     if (a.type.endsWith("fulfilled")) {
       dispatch(setAuthorize(true));
-      //add role?
+      dispatch(setRole(a.payload.role));
     }
   });
 };
