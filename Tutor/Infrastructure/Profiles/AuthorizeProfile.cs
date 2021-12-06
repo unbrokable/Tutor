@@ -13,7 +13,8 @@ namespace Tutor.Infrastructure.Profiles
         public AuthorizeProfile()
         {
             CreateMap<RegistrationViewModel, User>()
-                .ForMember(i => i.Role, j => j.MapFrom(j =>  (RoleType)j.Role));
+                .ForMember(i => i.Role, j => j.MapFrom(j => (RoleType)j.Role))
+                .ForMember(i => i.Image, j => j.Ignore());
         }
     }
 }

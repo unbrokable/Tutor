@@ -1,21 +1,22 @@
-import { RootState } from "./../store";
+import { RootState } from "../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export enum RoleType {
-  Student,
   Teacher,
+  Student,
+  Admin,
 }
-export interface UserState {
+export interface AuthorizeState {
   isAuthorize: boolean;
   role: string | null;
 }
 
-const initialState: UserState = {
+const initialState: AuthorizeState = {
   isAuthorize: false,
   role: null,
 };
 
-export const userSlice = createSlice({
-  name: "user",
+export const authorizeSlice = createSlice({
+  name: "authorize",
   initialState,
   reducers: {
     setAuthorize: (state, action: PayloadAction<boolean>) => {
@@ -38,6 +39,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setRole, setAuthorize, resertUser } = userSlice.actions;
-export const selectUser = (state: RootState) => state.user;
-export default userSlice.reducer;
+export const { setRole, setAuthorize, resertUser } = authorizeSlice.actions;
+export const selectAuthorize = (state: RootState) => state.authorize;
+export default authorizeSlice.reducer;

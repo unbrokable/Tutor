@@ -1,4 +1,3 @@
-import { RegistrationState } from "./../../slice/authorize/registrationSlice";
 import { LOGIN_API, REGISTRATION_API } from "./../ADRESS_CONST";
 import axios from "axios";
 import { jwtService } from "../../jwtService";
@@ -16,7 +15,7 @@ export const login = async (data: LoginState) => {
   return response;
 };
 
-export const registrate = async (data: RegistrationState) => {
+export const registrate = async (data: FormData) => {
   let response = await axios.post(REGISTRATION_API, data);
   handleData(response.data);
   return response;
