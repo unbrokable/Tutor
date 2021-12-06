@@ -43,7 +43,7 @@ namespace Tutor.Controllers
 
             var claims = new[] {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role,nameof(user.Role))
+                new Claim(ClaimTypes.Role,user.Role.ToString())
             };
 
             var data = _authorizationService
@@ -51,7 +51,7 @@ namespace Tutor.Controllers
 
             return Ok(new { 
                 data.AccessToken,
-                Role = nameof(user.Role)
+                Role = user.Role.ToString()
             });
         }
 
@@ -59,9 +59,6 @@ namespace Tutor.Controllers
         public async Task<ActionResult> Registration([FromForm]RegistrationViewModel registration)
         {
             var user = _mapper.Map<User>(registration);
-
-            user.DateOfBirth = DateTime.Now;
-          //  user.Image = await imageHandler.SaveAsync(registration.Img);
 
             await _dataBase
                 .Users
@@ -79,7 +76,7 @@ namespace Tutor.Controllers
          
             var claims = new[] {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role,nameof(user.Role))
+                new Claim(ClaimTypes.Role,user.Role.ToString())
             };
 
             var data = _authorizationService
@@ -88,7 +85,7 @@ namespace Tutor.Controllers
             return Ok(new
             {
                 data.AccessToken,
-                Role = nameof(user.Role)
+                Role = user.Role.ToString()
             });
         }
 

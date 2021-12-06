@@ -1,53 +1,60 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { Form, Input, Button, Select, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Select } from "antd";
 import {
   registrateThunk,
   selectRegistration,
+  setRegistrationConfirmPassword,
   setRegistrationEmail,
+  setRegistrationGender,
+  setRegistrationLastName,
   setRegistrationName,
   setRegistrationPassword,
+  setRegistrationPhone,
   setRegistrationRole,
 } from "../../app/slice/authorize/registrationSlice";
-
 import Password from "antd/lib/input/Password";
 import { Redirect } from "react-router";
-import { useState } from "react";
 import { RoleType, selectAuthorize } from "../../app/slice/AuthorizeSlice";
 
 const { Option } = Select;
 const Registration = () => {
-  const [img, chooseImg] = useState(new File([], ""));
   const dispatch = useAppDispatch();
   const state = useAppSelector(selectRegistration);
   const authorize = useAppSelector(selectAuthorize).isAuthorize;
   return (
     <>
       {authorize ? <Redirect to="/cabinet" /> : null}
+      <h3>Registration new cabinet</h3>
       <Form
         labelCol={{ span: 2 }}
         wrapperCol={{ span: 8 }}
-        onFinish={() => dispatch(registrateThunk(img))}
+        onFinish={() => dispatch(registrateThunk())}
       >
-        <Form.Item name="Picture" label="File">
-          <Upload
-            data={img}
-            listType="picture"
-            beforeUpload={(e) => false}
-            onChange={(e) => {
-              chooseImg(e.file.originFileObj as File);
-            }}
-            onRemove={(e) => chooseImg(new File([], ""))}
-            maxCount={1}
-          >
-            <Button icon={<UploadOutlined />}>Upload File</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+        <Form.Item name="name" label="First Name" rules={[{ required: true }]}>
           <Input
-            value={state.name}
+            value={state.firstName}
             onChange={(e) => dispatch(setRegistrationName(e.target.value))}
           />
+        </Form.Item>
+        <Form.Item
+          name="lastName"
+          label="Last Name"
+          rules={[{ required: true }]}
+        >
+          <Input
+            value={state.lastName}
+            onChange={(e) => dispatch(setRegistrationLastName(e.target.value))}
+          />
+        </Form.Item>
+        <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
+          <Select
+            value={state.gender}
+            placeholder="Select"
+            onChange={(e) => dispatch(setRegistrationGender(e))}
+          >
+            <Option value={"Man"}>Man</Option>
+            <Option value={"Woman"}>Woman</Option>
+          </Select>
         </Form.Item>
         <Form.Item name="email" label="E-mail" rules={[{ required: true }]}>
           <Input
@@ -55,7 +62,13 @@ const Registration = () => {
             onChange={(e) => dispatch(setRegistrationEmail(e.target.value))}
           />
         </Form.Item>
-        <Form.Item name="role" label="Role" rules={[{ required: true }]}>
+        <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
+          <Input
+            value={state.phone}
+            onChange={(e) => dispatch(setRegistrationPhone(e.target.value))}
+          />
+        </Form.Item>
+        <Form.Item name="role" label="Register as" rules={[{ required: true }]}>
           <Select
             value={state.role}
             placeholder="Select"
@@ -69,10 +82,38 @@ const Registration = () => {
             </Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Password">
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{ required: true }]}
+        >
           <Password
             value={state.password}
             onChange={(e) => dispatch(setRegistrationPassword(e.target.value))}
+          />
+        </Form.Item>
+        <Form.Item
+          name="confirmPassword"
+          label="Confirm Password"
+          rules={[
+            { required: true },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("The two passwords that you entered do not match!")
+                );
+              },
+            }),
+          ]}
+        >
+          <Password
+            value={state.confirmPassword}
+            onChange={(e) =>
+              dispatch(setRegistrationConfirmPassword(e.target.value))
+            }
           />
         </Form.Item>
         <Form.Item>

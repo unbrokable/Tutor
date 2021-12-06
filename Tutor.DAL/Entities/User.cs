@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Tutor.DAL.Entities
 {
     public enum RoleType
     {
-        User,
-        Teacher
+        Teacher,
+        Student,
+        Admin,
     }
 
     public class User
@@ -19,10 +19,10 @@ namespace Tutor.DAL.Entities
         public string Password { get; set; }
         public RoleType Role { get; set; }
         public string Education { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public bool Gender { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string Gender { get; set; }
         public string Image { get; set; }
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         public IList<CreditCards> CreditCards { get; set; }
         public IList<Announcements> Announcements { get; set; }

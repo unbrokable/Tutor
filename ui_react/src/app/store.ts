@@ -3,6 +3,8 @@ import registrationReducer from "./slice/authorize/registrationSlice";
 import loginReducer from "./slice/authorize/loginSlice";
 import authorizeReducer from "./slice/AuthorizeSlice";
 import notificationReducer from "./slice/notificationSlice";
+import { errorMiddleware } from "./middleware/errorMiddleware";
+import { authorizeMiddleware } from "./middleware/authorizeMiddleware";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +13,8 @@ export const store = configureStore({
     login: loginReducer,
     registration: registrationReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(errorMiddleware).concat(authorizeMiddleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
