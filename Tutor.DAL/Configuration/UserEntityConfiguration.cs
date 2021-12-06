@@ -25,9 +25,7 @@ namespace Tutor.DAL.Configuration
                 .IsRequired()
                 .HasMaxLength(100);
 
-
             builder.Property(i => i.Surname)
-                .IsRequired()
                 .HasMaxLength(100); 
 
             builder.Property(i => i.Password)

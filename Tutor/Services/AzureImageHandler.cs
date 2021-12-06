@@ -22,7 +22,7 @@ namespace Tutor.Services
             CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(accessKey);
             CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
             CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(containerName);
-            string fileName = GenerateFileName(img.FileName);
+            string fileName = GenerateFileName(img?.FileName);
 
             if (await cloudBlobContainer.CreateIfNotExistsAsync())
             {

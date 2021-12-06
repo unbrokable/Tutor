@@ -60,15 +60,23 @@ namespace Tutor.Controllers
         {
             var user = _mapper.Map<User>(registration);
 
-            user.Image = await imageHandler.SaveAsync(registration.Img);
+            user.DateOfBirth = DateTime.Now;
+          //  user.Image = await imageHandler.SaveAsync(registration.Img);
 
             await _dataBase
                 .Users
                 .AddAsync(user);
 
-            await _dataBase
-                .SaveChangesAsync();
-
+            try
+            {
+                await _dataBase
+                    .SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+         
             var claims = new[] {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role,nameof(user.Role))

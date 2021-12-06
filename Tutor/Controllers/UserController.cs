@@ -23,6 +23,7 @@ namespace Tutor.Controllers
         }
 
        [Authorize]
+       [HttpGet]
        public async Task<UserViewModel> Get()
        {
             var userEmail = User.GetEmail();
