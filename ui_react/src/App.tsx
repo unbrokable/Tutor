@@ -7,7 +7,7 @@ import CustomMenu from "./features/menu/Menu";
 import PrivateRoute from "./features/route/PrivateRoute";
 import PublicRoute from "./features/route/PublicRoute";
 import CustomSider from "./features/Sider/CustomSider";
-import Cabinet from "./features/student/Cabinet";
+import Cabinet from "./features/Cabinet";
 
 const App = () => {
   return (
@@ -27,6 +27,7 @@ const App = () => {
                 <PublicRoute path="/login">
                   <Login />
                 </PublicRoute>
+                <PublicRoute path="/changepassword">Password reset</PublicRoute>
                 <PublicRoute path="/registration">
                   <Registration />
                 </PublicRoute>

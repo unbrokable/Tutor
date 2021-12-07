@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Tutor.DAL.Entities;
 using Tutor.Models.Authorize;
+using Tutor.Models.User;
 
 namespace Tutor.Infrastructure.Profiles
 {
@@ -10,8 +11,10 @@ namespace Tutor.Infrastructure.Profiles
         {
             CreateMap<RegistrationViewModel, User>()
                 .ForMember(i => i.Role, j => j.MapFrom(j => (RoleType)j.Role))
-                .ForMember(i => i.Surname, j => j.MapFrom(j => j.LastName))
-                .ForMember(i => i.Name, j => j.MapFrom(j => j.FirstName));
+                .ForMember(i => i.LastName, j => j.MapFrom(j => j.LastName))
+                .ForMember(i => i.FirstName, j => j.MapFrom(j => j.FirstName));
+
+            CreateMap<User, UserViewModel>();
         }
     }
 }

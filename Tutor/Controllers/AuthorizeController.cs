@@ -38,7 +38,7 @@ namespace Tutor.Controllers
 
             if(user is null)
             {
-                return BadRequest();
+                return BadRequest("Email or password invalid");
             }
 
             var claims = new[] {
