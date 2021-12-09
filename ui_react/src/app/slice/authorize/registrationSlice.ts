@@ -4,10 +4,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setAuthorize, setRole } from "../AuthorizeSlice";
 
 export interface RegistrationState {
-  name?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  phone?: string;
   email?: string;
   role?: number;
   password?: string;
+  confirmPassword?: string;
 }
 
 const initialState: RegistrationState = {};
@@ -30,10 +34,22 @@ export const registrationSlice = createSlice({
         role: action.payload,
       };
     },
+    setRegistrationGender: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        gender: action.payload,
+      };
+    },
     setRegistrationName: (state, action: PayloadAction<string>) => {
       return {
         ...state,
-        name: action.payload,
+        firstName: action.payload,
+      };
+    },
+    setRegistrationLastName: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        lastName: action.payload,
       };
     },
     setRegistrationPassword: (state, action: PayloadAction<string>) => {
@@ -42,10 +58,22 @@ export const registrationSlice = createSlice({
         password: action.payload,
       };
     },
+    setRegistrationConfirmPassword: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        confirmPassword: action.payload,
+      };
+    },
     setRegistrationEmail: (state, action: PayloadAction<string>) => {
       return {
         ...state,
         email: action.payload,
+      };
+    },
+    setRegistrationPhone: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        phone: action.payload,
       };
     },
   },
@@ -54,28 +82,28 @@ export const {
   setRegistrationEmail,
   setRegistrationPassword,
   setRegistrationName,
+  setRegistrationLastName,
+  setRegistrationConfirmPassword,
+  setRegistrationPhone,
   setRegistrationRole,
+  setRegistrationGender,
 } = registrationSlice.actions;
 
 export default registrationSlice.reducer;
 export const selectRegistration = (state: RootState) => state.registration;
 
-export const registrateThunk =
-  (img: any): AppThunk =>
-  (dispatch, getState) => {
-    const formData = new FormData();
-    formData.append("img", img);
+export const registrateThunk = (): AppThunk => (dispatch, getState) => {
+  const formData = new FormData();
+  const state = selectRegistration(getState());
 
-    const state = selectRegistration(getState());
+  for (let key of Object.keys(state)) {
+    formData.append(key, (state as any)[key]);
+  }
 
-    for (let key of Object.keys(state)) {
-      formData.append(key, (state as any)[key]);
+  dispatch(registrateAsync(formData)).then((a) => {
+    if (a.type.endsWith("fulfilled")) {
+      dispatch(setAuthorize(true));
+      dispatch(setRole(a.payload.role));
     }
-
-    dispatch(registrateAsync(formData)).then((a) => {
-      if (a.type.endsWith("fulfilled")) {
-        dispatch(setAuthorize(true));
-        dispatch(setRole(a.payload.role));
-      }
-    });
-  };
+  });
+};

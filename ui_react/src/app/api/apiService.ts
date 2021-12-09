@@ -35,11 +35,13 @@ export const put = (url: string, data: any) => {
 };
 
 export const handleError = (error: any) => {
+  if (error?.response?.status === undefined) {
+    throw error;
+  }
   if (error.response.status === 401) {
     jwtService.remove();
   }
   console.log(error.response.data);
-  debugger;
   throw new Error(
     error.response.data.Message ||
       error.response.data.message ||
