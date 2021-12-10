@@ -1,28 +1,26 @@
 import { jwtService } from "../../app/jwtService";
 import {
-  RoleType,
+  resertUser,
   selectAuthorize,
   setAuthorize,
   setRole,
 } from "../../app/slice/AuthorizeSlice";
 import { useAppDispatch, useAppSelector } from "./../../app/hooks";
-import AuthorizeMenu from "./AuthorizeMenu";
 import {
   selectNotification,
   setError,
   setMessage,
 } from "../../app/slice/notificationSlice";
-import { notification } from "antd";
-import { Redirect } from "react-router";
-import AdminMenu from "./AdminMenu";
-import StudentMenu from "./StudentMenu";
-import TutorMenu from "./TutorMenu";
+import { Button, Menu, notification } from "antd";
+import { Redirect, useHistory } from "react-router";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-const Menu = () => {
+const CustomMenu = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector(selectAuthorize);
   const notifications = useAppSelector(selectNotification);
+  const history = useHistory();
 
   const openErrorNotification = () => {
     notification["error"]({
@@ -52,19 +50,40 @@ const Menu = () => {
       {state.isAuthorize ? null : <Redirect to="/login" />}
       {!!notifications.errorMessage ? openErrorNotification() : null}
       {!!notifications.message ? openNotification() : null}
-      {jwtService.get() || state.isAuthorize ? (
-        state.role === RoleType[RoleType.Admin] ? (
-          <AdminMenu />
-        ) : state.role === RoleType[RoleType.Student] ? (
-          <StudentMenu />
+
+      <Menu theme="dark" mode="horizontal" direction="rtl">
+        <Menu.Item disabled>
+          <span style={{ color: "white", fontSize: "18px" }}>Study all</span>
+        </Menu.Item>
+        {jwtService.get() || state.isAuthorize ? (
+          <>
+            <Menu.Item>
+              <Button
+                type="text"
+                style={{ color: "white" }}
+                onClick={() => {
+                  jwtService.remove();
+                  dispatch(resertUser());
+                  history.push("/login");
+                }}
+              >
+                Log out
+              </Button>
+            </Menu.Item>
+          </>
         ) : (
-          <TutorMenu />
-        )
-      ) : (
-        <AuthorizeMenu />
-      )}
+          <>
+            <Menu.Item>
+              <Link to="/login">Log in</Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to="/registration">Registration</Link>
+            </Menu.Item>
+          </>
+        )}
+      </Menu>
     </>
   );
 };
 
-export default Menu;
+export default CustomMenu;

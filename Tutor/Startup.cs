@@ -33,6 +33,13 @@ namespace Tutor
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddAuthentication()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;                
+                });
+
             services.AddSwaggerGen();
 
             services.AddControllers();

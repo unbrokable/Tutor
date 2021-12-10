@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tutor.DAL;
 using Tutor.DAL.Entities;
 using Tutor.Extentions;
 using Tutor.Models.User;
+using Tutor.Services;
 
 namespace Tutor.Controllers
 {
@@ -18,16 +19,15 @@ namespace Tutor.Controllers
     {
         private readonly IMapper mapper;
         private readonly ApplicationContext applicationContext;
-        private readonly UserManager<User> userManager;
-
-        public UserController(IMapper mapper, ApplicationContext applicationContext, UserManager<User> userManager)
+        private readonly IImageHandler imageHandler;
+        public UserController(IMapper mapper, ApplicationContext applicationContext, IImageHandler imageHandler)
         {
             this.applicationContext = applicationContext;
             this.mapper = mapper;
-            this.userManager = userManager;
+            this.imageHandler = imageHandler;
         }
 
- /*      [Authorize]
+       [Authorize]
        [HttpGet]
        public async Task<UserViewModel> Get()
        {
@@ -40,64 +40,35 @@ namespace Tutor.Controllers
             return mapper
                 .Map<UserViewModel>(user);
        }
-*/
-
-        [Authorize]
-        [HttpGet]
-        public async Task<UserViewModel> MyAccount()
-        {
-            var user = await applicationContext.Users.FirstOrDefaultAsync(u => u.Email == User.GetEmail());
-
-            if (user == null)
-            {
-                throw new Exception("User not found");
-            }
-
-            var model = new UserViewModel()
-            {
-                Name = user.Name,
-                Surname = user.Surname,
-                DateOfBirth = user.DateOfBirth,
-                Education = user.Education,
-                Gender = user.Gender,
-                Image = user.Image,
-                Email = user.Email,
-                Phone = user.Phone,
-            };
-
-            return model;
-        }
 
         [Authorize]
         [HttpPost]
-        public async Task<UserViewModel> MyAccount(UserViewModel vm)
+        public async Task<UserViewModel> Update([FromForm] UserUpdateViewModel userUpdateView)
         {
-            var userToUpdate = new User()
-            {
-                Id = (await applicationContext.Users.FirstAsync(u => u.Id == vm.Id)).Id,
-                Name = vm.Name,
-                Surname = vm.Surname,
-                Gender = vm.Gender,
-                Email = vm.Email,
-                Education = vm.Education,
-                DateOfBirth = vm.DateOfBirth,
-                Image = vm.Image,
-                Phone = vm.Phone
-            };
+            var userEmail = User.GetEmail();
 
+            var user = await applicationContext
+                .Users
+                .FirstOrDefaultAsync(i => i.Email == userEmail);
 
-            if (userToUpdate == null)
+            if (userUpdateView.Image != null)
             {
-                throw new Exception("Cannot update user");
-            }
-            else
-            {
-                applicationContext.Users.Update(userToUpdate);
+                user.Image = await imageHandler.SaveAsync(userUpdateView.Image);
             }
 
-            return mapper.Map<UserViewModel>(userToUpdate);
+            user = user.Update(userUpdateView);
+
+            await applicationContext.SaveChangesAsync();
+
+            return mapper
+                .Map<UserViewModel>(user);
         }
 
+        [HttpGet("test")]
+        public async Task<IEnumerable<User>> GetUser()
+        {
+            return await applicationContext.Users.ToListAsync();
+        }
 
     }
 }

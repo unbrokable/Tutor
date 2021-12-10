@@ -49,12 +49,13 @@ export default loginSlice.reducer;
 export const selectLogin = (state: RootState) => state.login;
 
 export const loginThunk = (): AppThunk => (dispatch, getState) => {
-  debugger;
   const state = selectLogin(getState());
   dispatch(loginAsync(state)).then((a) => {
     if (a.type.endsWith("fulfilled")) {
+      debugger;
       dispatch(setAuthorize(true));
       dispatch(setRole(a.payload.role));
     }
+    throw a;
   });
 };

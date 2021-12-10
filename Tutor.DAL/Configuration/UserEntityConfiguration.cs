@@ -21,11 +21,11 @@ namespace Tutor.DAL.Configuration
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(i => i.Name)
+            builder.Property(i => i.FirstName)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(i => i.Surname)
+            builder.Property(i => i.LastName)
                 .HasMaxLength(100); 
 
             builder.Property(i => i.Password)

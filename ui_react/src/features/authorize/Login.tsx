@@ -56,7 +56,13 @@ const Login = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Sign In via Google
+          </Button>
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Sign In
           </Button>
         </Form.Item>
       </Form>
