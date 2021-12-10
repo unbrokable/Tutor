@@ -60,6 +60,13 @@ namespace Tutor.Controllers
         {
             var user = _mapper.Map<User>(registration);
 
+            var searchUser = _dataBase.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+
+            if (searchUser != null)
+            {
+                return BadRequest("User with such email already exists");
+            }
+
             await _dataBase
                 .Users
                 .AddAsync(user);
