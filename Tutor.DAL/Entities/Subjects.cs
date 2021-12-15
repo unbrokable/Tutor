@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Tutor.DAL.Entities
 {
@@ -8,9 +6,5 @@ namespace Tutor.DAL.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public double Price { get; set; }
-
-        public IList<Subjects_Users> Subjects_Users { get; set; }
     }
 }
