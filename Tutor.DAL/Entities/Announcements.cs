@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Tutor.DAL.Entities
 {
@@ -13,6 +14,8 @@ namespace Tutor.DAL.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public Subjects Subject { get; set; }
+
+        public ICollection<AnnouncementDates> Dates { get; set; }
 
     }
 }

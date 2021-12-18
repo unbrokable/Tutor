@@ -16,7 +16,6 @@ namespace Tutor.DAL.Configuration
             builder.HasKey(x => new { x.Id });
 
             builder.Property(x => x.Name)
-                .IsRequired()
                 .HasMaxLength(50);
 
             builder.Property(x => x.Description)

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using Tutor.DAL.Entities;
 using Tutor.Models.Announcement;
 using Tutor.Models.Authorize;
@@ -25,11 +26,7 @@ namespace Tutor.Infrastructure.Profiles
             CreateMap<AnnouncementCreateViewModel, Announcements>();
 
             CreateMap<AnnouncementDatesCreateViewModel, AnnouncementDates>()
-                .ForMember(i => i.Id, j => j.MapFrom(j => j.Id))
-                .ForMember(i => i.StartDate, j => j.MapFrom(j => j.StartDate))
-                .ForMember(i => i.EndDate, j => j.MapFrom(j => j.EndDate))
-                .ForMember(i => i.DayOfWeek, j => j.MapFrom(j => j.DayOfWeek))
-                .ReverseMap();
+                .ForMember(i => i.Day, j => j.MapFrom(j => (DayOfWeek)j.Day));
         }
     }
 }

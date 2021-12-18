@@ -16,7 +16,7 @@ export enum Days {
   SATURDAYS,
 }
 export interface AnnouncementDateElement {
-  day?: Days;
+  day: number;
   startTime: string;
   endTime: string;
 }
@@ -41,7 +41,14 @@ const initialState: AnnouncementCreateState = {
 export const addAnnouncementAsync = createAsyncThunk(
   "announcement/create",
   async (data: AnnouncementCreateState) => {
-    const response = await addAnnouncement(data);
+    const response = await addAnnouncement({
+      ...data,
+      dates: data.dates?.map((i) => ({
+        ...i,
+        startTime: new Date(i.startTime).toJSON(),
+        endTime: new Date(i.endTime).toJSON(),
+      })),
+    });
     return response.data;
   }
 );
@@ -101,21 +108,23 @@ export const addAnnouncementDate =
   (date: AnnouncementDateElement): AppThunk =>
   (dispatch, getState) => {
     const state = selectAnnouncementCreate(getState()).dates;
-    dispatch(setDate([...state!, date]));
+    if (state) {
+      dispatch(setDate([...state, date]));
+    } else {
+      dispatch(setDate([date]));
+    }
   };
 
 export const updateAnnouncementDate =
-  (date: AnnouncementDateElement, index: number): AppThunk =>
+  (date: AnnouncementDateElement, id: number): AppThunk =>
   (dispatch, getState) => {
     const state = selectAnnouncementCreate(getState()).dates;
-    dispatch(
-      setDate([...state?.filter((_, index) => index !== +index)!, date])
-    );
+    dispatch(setDate([...state?.filter((_, index) => index !== +id)!, date]));
   };
 
 export const removeAnnouncementDate =
   (id: number): AppThunk =>
   (dispatch, getState) => {
     const state = selectAnnouncementCreate(getState()).dates;
-    dispatch(setDate(state?.filter((_, index) => index !== +id)!));
+    dispatch(setDate(state?.filter((_, index) => +index !== +id) ?? []));
   };

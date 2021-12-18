@@ -15,7 +15,6 @@ namespace Tutor.DAL.Configuration
 
             builder.HasKey(x => new { x.Id });     
 
-
         }
     }
 }

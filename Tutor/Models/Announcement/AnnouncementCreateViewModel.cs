@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tutor.DAL.Entities;
+using Tutor.Models.Authorize;
 
 namespace Tutor.Models.Announcement
 {
@@ -12,6 +13,6 @@ namespace Tutor.Models.Announcement
         public string Location { get; set; }
         public int SubjectId { get; set; }
 
-        public List<AnnouncementDates> Dates { get; set; }
+        public List<AnnouncementDatesCreateViewModel> Dates { get; set; }
     }
 }

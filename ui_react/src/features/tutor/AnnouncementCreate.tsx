@@ -65,10 +65,9 @@ const AnnouncementCreate = () => {
           {state.dates?.map((d, index) => {
             return (
               <Row>
-                <Col>Day: {Days[d.day!]}</Col>
                 <Col>
                   <TimePicker.RangePicker
-                    defaultValue={[moment(d.startTime), moment(d.endTime)]}
+                    value={[moment(d.startTime), moment(d.endTime)]}
                     onChange={(e) => {
                       dispatch(
                         updateAnnouncementDate(
@@ -90,13 +89,15 @@ const AnnouncementCreate = () => {
                     dispatch(updateAnnouncementDate({ ...d, day: e }, index))
                   }
                 >
-                  {Object.keys(Days).map((day, index) => (
-                    <Option value={Days[index]}>{day}</Option>
-                  ))}
+                  {Object.keys(Days)
+                    .filter((value) => typeof Days[+value] === "string")
+                    .map((day, index) => (
+                      <Option value={+day}>{Days[+day]}</Option>
+                    ))}
                 </Select>
                 <Col>
                   <Button
-                    onChange={() => dispatch(removeAnnouncementDate(index))}
+                    onClick={() => dispatch(removeAnnouncementDate(index))}
                   >
                     Remove
                   </Button>
@@ -112,8 +113,8 @@ const AnnouncementCreate = () => {
                   dispatch(
                     addAnnouncementDate({
                       day: Days.MONDAY,
-                      startTime: Date.now.toString(),
-                      endTime: Date.now.toString(),
+                      startTime: moment().toString(),
+                      endTime: moment().toString(),
                     })
                   )
                 }

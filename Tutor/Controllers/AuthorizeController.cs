@@ -98,7 +98,7 @@ namespace Tutor.Controllers
             });
         }
 
-        public async Task<GoogleJsonWebSignature.Payload> ValidateIdTokenAndGetUserInfo(GoogleRequestViewModel vm)
+        async Task<GoogleJsonWebSignature.Payload> ValidateIdTokenAndGetUserInfo(GoogleRequestViewModel vm)
         {
             return await GoogleJsonWebSignature
                 .ValidateAsync(vm.Token, new GoogleJsonWebSignature.ValidationSettings()
