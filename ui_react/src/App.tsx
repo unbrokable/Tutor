@@ -8,6 +8,8 @@ import PrivateRoute from "./features/route/PrivateRoute";
 import PublicRoute from "./features/route/PublicRoute";
 import CustomSider from "./features/Sider/CustomSider";
 import Cabinet from "./features/Cabinet";
+import Announcements from "./features/tutor/Announcements";
+import AnnouncementCreate from "./features/tutor/AnnouncementCreate";
 
 const App = () => {
   return (
@@ -27,7 +29,15 @@ const App = () => {
                 <PublicRoute path="/login">
                   <Login />
                 </PublicRoute>
-                <PublicRoute path="/changepassword">Password reset</PublicRoute>
+                <PrivateRoute path="/announcement">
+                  <Announcements />
+                </PrivateRoute>
+                <PrivateRoute path="/announcementadd">
+                  <AnnouncementCreate />
+                </PrivateRoute>
+                <PrivateRoute path="/changepassword">
+                  Password reset
+                </PrivateRoute>
                 <PublicRoute path="/registration">
                   <Registration />
                 </PublicRoute>

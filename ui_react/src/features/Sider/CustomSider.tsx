@@ -35,9 +35,9 @@ const CustomSider = () => {
             ) : (
               <>
                 <Menu.Item key="4">
-                  <Link to="/forms">Forms</Link>
+                  <Link to="/announcement">Announcements</Link>
                 </Menu.Item>
-                <Menu.Item key="4">
+                <Menu.Item key="5">
                   <Link to="/forms">Feedback</Link>
                 </Menu.Item>
               </>

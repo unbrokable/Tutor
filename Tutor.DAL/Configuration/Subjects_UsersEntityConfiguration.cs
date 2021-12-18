@@ -18,10 +18,6 @@ namespace Tutor.DAL.Configuration
             builder.HasOne(x => x.User)
                 .WithMany(x => x.Subjects_Users)
                 .HasForeignKey(x => x.UsersID);
-
-            builder.HasOne(x => x.Subject)
-                .WithMany(x => x.Subjects_Users)
-                .HasForeignKey(x => x.SubjectsID);
         }
     }
 }
