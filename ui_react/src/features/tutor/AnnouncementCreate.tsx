@@ -1,17 +1,22 @@
-import { Button, Select, Steps } from "antd";
+import { Button, Col, Row, Select, Steps, TimePicker } from "antd";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   addAnnouncementAsync,
+  addAnnouncementDate,
+  Days,
   loadSubjectsAsync,
+  removeAnnouncementDate,
   selectAnnouncementCreate,
   setDescription,
   setLocation,
   setOrder,
   setPrice,
   setSubject,
+  updateAnnouncementDate,
 } from "../../app/slice/tutor/AnnouncementCreateSlice";
 import { Input } from "antd";
+import moment from "moment";
 
 const { TextArea } = Input;
 const { Step } = Steps;
@@ -51,6 +56,73 @@ const AnnouncementCreate = () => {
           value={state.location}
           onChange={(e) => dispatch(setLocation(e.target.value))}
         />
+      ),
+    },
+    {
+      title: "ChooseDate",
+      content: (
+        <>
+          {state.dates?.map((d, index) => {
+            return (
+              <Row>
+                <Col>Day: {Days[d.day!]}</Col>
+                <Col>
+                  <TimePicker.RangePicker
+                    defaultValue={[moment(d.startTime), moment(d.endTime)]}
+                    onChange={(e) => {
+                      dispatch(
+                        updateAnnouncementDate(
+                          {
+                            ...d,
+                            startTime: e![0]!.toDate().toString(),
+                            endTime: e![1]!.toDate().toString(),
+                          },
+                          index
+                        )
+                      );
+                    }}
+                  />
+                </Col>
+                <Select
+                  value={d.day}
+                  placeholder="Select"
+                  onChange={(e) =>
+                    dispatch(updateAnnouncementDate({ ...d, day: e }, index))
+                  }
+                >
+                  {Object.keys(Days).map((day, index) => (
+                    <Option value={Days[index]}>{day}</Option>
+                  ))}
+                </Select>
+                <Col>
+                  <Button
+                    onChange={() => dispatch(removeAnnouncementDate(index))}
+                  >
+                    Remove
+                  </Button>
+                </Col>
+              </Row>
+            );
+          })}
+
+          <Row>
+            <Col>
+              <Button
+                onClick={() =>
+                  dispatch(
+                    addAnnouncementDate({
+                      day: Days.MONDAY,
+                      startTime: Date.now.toString(),
+                      endTime: Date.now.toString(),
+                    })
+                  )
+                }
+              >
+                Add
+              </Button>
+            </Col>
+          </Row>
+        </>
       ),
     },
     {

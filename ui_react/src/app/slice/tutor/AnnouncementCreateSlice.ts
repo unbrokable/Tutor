@@ -5,6 +5,22 @@ import {
   addAnnouncement,
   loadSubjects,
 } from "../../api/functionsAPI/announcementAPI";
+
+export enum Days {
+  SUNDAY,
+  MONDAY,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAYS,
+}
+export interface AnnouncementDateElement {
+  day?: Days;
+  startTime: string;
+  endTime: string;
+}
+
 export interface AnnouncementCreateState {
   subjects?: Array<{
     id: number;
@@ -13,10 +29,9 @@ export interface AnnouncementCreateState {
   subjectId?: number;
   description?: string;
   location?: string;
-  startDate?: string;
-  endDate?: string;
   price?: number;
   order: number;
+  dates?: Array<AnnouncementDateElement>;
 }
 
 const initialState: AnnouncementCreateState = {
@@ -55,11 +70,11 @@ export const announcementCreateSlice = createSlice({
     setPrice: (state, { payload }: PayloadAction<number>) => {
       state.price = payload;
     },
-    setStartDate: (state, { payload }: PayloadAction<string>) => {
-      state.startDate = payload;
-    },
-    setEndDate: (state, { payload }: PayloadAction<string>) => {
-      state.endDate = payload;
+    setDate: (
+      state,
+      { payload }: PayloadAction<Array<AnnouncementDateElement>>
+    ) => {
+      state.dates = payload;
     },
   },
   extraReducers: (builder) => {
@@ -70,22 +85,37 @@ export const announcementCreateSlice = createSlice({
 });
 
 export const {
-  setEndDate,
-  setStartDate,
   setPrice,
   setLocation,
   setDescription,
   setSubject,
   setOrder,
+  setDate,
 } = announcementCreateSlice.actions;
 
 export const selectAnnouncementCreate = (state: RootState) =>
   state.announcementCreate;
 export default announcementCreateSlice.reducer;
 
-export const SetOrderThunk =
-  (orderNumber: number): AppThunk =>
+export const addAnnouncementDate =
+  (date: AnnouncementDateElement): AppThunk =>
   (dispatch, getState) => {
-    switch (orderNumber) {
-    }
+    const state = selectAnnouncementCreate(getState()).dates;
+    dispatch(setDate([...state!, date]));
+  };
+
+export const updateAnnouncementDate =
+  (date: AnnouncementDateElement, index: number): AppThunk =>
+  (dispatch, getState) => {
+    const state = selectAnnouncementCreate(getState()).dates;
+    dispatch(
+      setDate([...state?.filter((_, index) => index !== +index)!, date])
+    );
+  };
+
+export const removeAnnouncementDate =
+  (id: number): AppThunk =>
+  (dispatch, getState) => {
+    const state = selectAnnouncementCreate(getState()).dates;
+    dispatch(setDate(state?.filter((_, index) => index !== +id)!));
   };
