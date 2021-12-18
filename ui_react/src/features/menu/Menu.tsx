@@ -47,7 +47,7 @@ const CustomMenu = () => {
 
   return (
     <>
-      {state.isAuthorize ? null : <Redirect to="/login" />}
+      {state.isAuthorize ? null : <Redirect to="/main" />}
       {!!notifications.errorMessage ? openErrorNotification() : null}
       {!!notifications.message ? openNotification() : null}
 
