@@ -14,6 +14,8 @@ namespace Tutor.DAL
 
         public DbSet<Subjects> Subjects { get; set; }
 
+        public DbSet<AnnouncementDates> AnnouncementDates { get; set; }
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }

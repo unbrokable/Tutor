@@ -22,12 +22,6 @@ namespace Tutor.DAL.Configuration
             builder.Property(x => x.Description)
                 .IsRequired()
                 .HasMaxLength(200);
-
-            builder.Property(x => x.StartDate)
-                .IsRequired();
-
-            builder.Property(x => x.EndDate)
-                .IsRequired();
         }
     }
 }
