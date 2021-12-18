@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./features/authorize/Login";
 import Registration from "./features/authorize/Registration";
+import MainPage from "./features/MainPage";
 import CustomMenu from "./features/menu/Menu";
 import PrivateRoute from "./features/route/PrivateRoute";
 import PublicRoute from "./features/route/PublicRoute";
@@ -21,6 +22,9 @@ const App = () => {
             {<CustomSider />}
             <Content style={{ padding: "20px 50px" }}>
               <Switch>
+                <PublicRoute path="/main">
+                  <MainPage />
+                </PublicRoute>
                 <PrivateRoute path="/cabinet">
                   <Cabinet />
                 </PrivateRoute>
