@@ -23,6 +23,13 @@ namespace Tutor.Infrastructure.Profiles
                 .ForMember(i => i.User, j => j.MapFrom(j => j.User.FirstName + " " + j.User.LastName));
                 
             CreateMap<AnnouncementCreateViewModel, Announcements>();
+
+            CreateMap<AnnouncementDatesCreateViewModel, AnnouncementDates>()
+                .ForMember(i => i.Id, j => j.MapFrom(j => j.Id))
+                .ForMember(i => i.StartDate, j => j.MapFrom(j => j.StartDate))
+                .ForMember(i => i.EndDate, j => j.MapFrom(j => j.EndDate))
+                .ForMember(i => i.DayOfWeek, j => j.MapFrom(j => j.DayOfWeek))
+                .ReverseMap();
         }
     }
 }

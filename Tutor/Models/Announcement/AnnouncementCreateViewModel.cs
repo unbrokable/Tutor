@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Tutor.DAL.Entities;
 
 namespace Tutor.Models.Announcement
 {
@@ -9,7 +11,7 @@ namespace Tutor.Models.Announcement
         public string Description { get; set; }
         public string Location { get; set; }
         public int SubjectId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+
+        public List<AnnouncementDates> Dates { get; set; }
     }
 }
