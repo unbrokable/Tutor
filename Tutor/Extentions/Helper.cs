@@ -10,9 +10,17 @@
                 var data = newProp.GetValue(newEntity);
                 var oldProp = old.GetType().GetProperty(newProp.Name);
 
-                if (data != null && oldProp != null && data.GetType() == oldProp.GetValue(old)?.GetType())
+                if (data != null && oldProp != null 
+                    && (data.GetType() == oldProp.GetValue(old)?.GetType() || oldProp.GetValue(old) is null))
                 {
-                    oldProp.SetValue(old, data);
+                    try
+                    {
+                        oldProp.SetValue(old, data);
+                    }
+                    catch
+                    {
+                    }
+                    
                 }
             }
 

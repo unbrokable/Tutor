@@ -51,7 +51,7 @@ namespace Tutor.Controllers
 
             var claims = new[] {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role,nameof(user.Role))
+                new Claim(ClaimTypes.Role,user.Role.ToString())
             };
 
             var data = _authorizationService
@@ -59,7 +59,7 @@ namespace Tutor.Controllers
 
             return Ok(new { 
                 data.AccessToken,
-                Role = nameof(user.Role)
+                Role = user.Role.ToString()
             });
         }
 
@@ -81,15 +81,17 @@ namespace Tutor.Controllers
                     LastName = googleUser.FamilyName,
                     Password = _randomPassword.GetRandomPassword(),
                     Image = googleUser.Picture,
-                    Role = RoleType.Student
+                    Role = RoleType.Student,
+                    Phone = ""
                 };
 
-                await _dataBase.Users.AddAsync(user); 
+                await _dataBase.Users.AddAsync(user);
+                await _dataBase.SaveChangesAsync();
             }
 
             var claims = new[] {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role,nameof(user.Role))
+                new Claim(ClaimTypes.Role,user.Role.ToString())
             };
 
             var data = _authorizationService
@@ -97,11 +99,11 @@ namespace Tutor.Controllers
 
             return Ok(new { 
                 data.AccessToken,
-                Role = nameof(user.Role)
+                Role = user.Role.ToString()
             });
         }
 
-        public async Task<GoogleJsonWebSignature.Payload> ValidateIdTokenAndGetUserInfo(GoogleRequestViewModel vm)
+        async Task<GoogleJsonWebSignature.Payload> ValidateIdTokenAndGetUserInfo(GoogleRequestViewModel vm)
         {
             return await GoogleJsonWebSignature
                 .ValidateAsync(vm.Token, new GoogleJsonWebSignature.ValidationSettings()
@@ -139,7 +141,7 @@ namespace Tutor.Controllers
          
             var claims = new[] {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role,nameof(user.Role))
+                new Claim(ClaimTypes.Role,user.Role.ToString())
             };
 
             var data = _authorizationService
@@ -148,7 +150,7 @@ namespace Tutor.Controllers
             return Ok(new
             {
                 data.AccessToken,
-                Role = nameof(user.Role)
+                Role = user.Role.ToString()
             });
         }
 

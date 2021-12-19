@@ -1,6 +1,10 @@
+import { GoogleLoginResponse } from "react-google-login";
 import { AppThunk, RootState } from "./../../store";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { login } from "../../api/functionsAPI/authorizationAPI";
+import {
+  login,
+  loginWithGoogle,
+} from "../../api/functionsAPI/authorizationAPI";
 import { setAuthorize, setRole } from "../AuthorizeSlice";
 export interface LoginState {
   email?: string;
@@ -13,6 +17,15 @@ export const loginAsync = createAsyncThunk(
   "loginSlice/login",
   async (data: LoginState) => {
     const response = await login(data);
+    return response.data;
+  }
+);
+
+export const loginWithGoogleAsync = createAsyncThunk(
+  "loginform/loginGoogle",
+  async (data: GoogleLoginResponse) => {
+    const token = data.getAuthResponse().id_token;
+    const response = await loginWithGoogle(token);
     return response.data;
   }
 );

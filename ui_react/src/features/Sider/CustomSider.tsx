@@ -15,7 +15,11 @@ const CustomSider = () => {
             mode="inline"
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
-            style={{ height: "100%", borderRight: 0 }}
+            style={{
+              height: "100%",
+              borderRight: 0,
+              backgroundColor: "#fc8003",
+            }}
           >
             <Menu.Item key="1">
               <Link to="/cabinet">About Me</Link>
@@ -35,9 +39,9 @@ const CustomSider = () => {
             ) : (
               <>
                 <Menu.Item key="4">
-                  <Link to="/forms">Forms</Link>
+                  <Link to="/announcement">Announcements</Link>
                 </Menu.Item>
-                <Menu.Item key="4">
+                <Menu.Item key="5">
                   <Link to="/forms">Feedback</Link>
                 </Menu.Item>
               </>

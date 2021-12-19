@@ -18,13 +18,6 @@ namespace Tutor.DAL.Configuration
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(50);
-
-            builder.Property(x => x.Description)
-                .IsRequired()
-                .HasMaxLength(200);
-
-            builder.Property(x => x.Price)
-                .IsRequired();
         }
     }
 }

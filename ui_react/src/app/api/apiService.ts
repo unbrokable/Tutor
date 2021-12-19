@@ -41,7 +41,10 @@ export const handleError = (error: any) => {
   if (error.response.status === 401) {
     jwtService.remove();
   }
-  console.log(error.response.data);
+  console.log(error.response);
+  if (error.response.data) {
+    throw error.response.data;
+  }
   throw new Error(
     error.response.data.Message ||
       error.response.data.message ||

@@ -1,8 +1,10 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import { Redirect } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { GoogleLogin, GoogleLoginResponse } from "react-google-login";
 import {
   loginThunk,
+  loginWithGoogleAsync,
   selectLogin,
   setEmail,
   setPassword,
@@ -55,9 +57,15 @@ const Login = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Sign In via Google
-          </Button>
+          <GoogleLogin
+            clientId={
+              "292451837131-7nlj2jr7q31kn1ujhiqrc6k1kvop5812.apps.googleusercontent.com"
+            }
+            buttonText="Google"
+            onSuccess={(res) =>
+              dispatch(loginWithGoogleAsync(res as GoogleLoginResponse))
+            }
+          />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

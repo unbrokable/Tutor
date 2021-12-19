@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tutor.DAL;
 
 namespace Tutor.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20211218105350_AnnouncementDatesWasAdded")]
+    partial class AnnouncementDatesWasAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,13 +31,13 @@ namespace Tutor.DAL.Migrations
                     b.Property<int>("AnnouncementId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Day")
+                    b.Property<int>("DayOfWeek")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("StarTime")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -61,6 +63,7 @@ namespace Tutor.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -251,7 +254,7 @@ namespace Tutor.DAL.Migrations
             modelBuilder.Entity("Tutor.DAL.Entities.AnnouncementDates", b =>
                 {
                     b.HasOne("Tutor.DAL.Entities.Announcements", "Announcement")
-                        .WithMany("Dates")
+                        .WithMany()
                         .HasForeignKey("AnnouncementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -313,11 +316,6 @@ namespace Tutor.DAL.Migrations
                     b.Navigation("Subject");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tutor.DAL.Entities.Announcements", b =>
-                {
-                    b.Navigation("Dates");
                 });
 
             modelBuilder.Entity("Tutor.DAL.Entities.User", b =>

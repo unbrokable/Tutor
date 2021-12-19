@@ -3,47 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tutor.DAL;
 
 namespace Tutor.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20211209205143_AnnounecementStructureChange")]
+    partial class AnnounecementStructureChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Tutor.DAL.Entities.AnnouncementDates", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AnnouncementId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StarTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnnouncementId");
-
-                    b.ToTable("AnnouncementDates", "dbo");
-                });
 
             modelBuilder.Entity("Tutor.DAL.Entities.Announcements", b =>
                 {
@@ -57,15 +33,25 @@ namespace Tutor.DAL.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("SubjectId")
                         .HasColumnType("int");
@@ -248,17 +234,6 @@ namespace Tutor.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Tutor.DAL.Entities.AnnouncementDates", b =>
-                {
-                    b.HasOne("Tutor.DAL.Entities.Announcements", "Announcement")
-                        .WithMany("Dates")
-                        .HasForeignKey("AnnouncementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Announcement");
-                });
-
             modelBuilder.Entity("Tutor.DAL.Entities.Announcements", b =>
                 {
                     b.HasOne("Tutor.DAL.Entities.Subjects", "Subject")
@@ -313,11 +288,6 @@ namespace Tutor.DAL.Migrations
                     b.Navigation("Subject");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tutor.DAL.Entities.Announcements", b =>
-                {
-                    b.Navigation("Dates");
                 });
 
             modelBuilder.Entity("Tutor.DAL.Entities.User", b =>

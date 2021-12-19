@@ -4,11 +4,16 @@ import loginReducer from "./slice/authorize/loginSlice";
 import authorizeReducer from "./slice/AuthorizeSlice";
 import userReducer from "./slice/userSlice";
 import notificationReducer from "./slice/notificationSlice";
+import announcementCreateReducer from "../app/slice/tutor/AnnouncementCreateSlice";
+import announcementsReducer from "../app/slice/tutor/AnnouncementsSlice";
+
 import { errorMiddleware } from "./middleware/errorMiddleware";
 import { authorizeMiddleware } from "./middleware/authorizeMiddleware";
 
 export const store = configureStore({
   reducer: {
+    announcements: announcementsReducer,
+    announcementCreate: announcementCreateReducer,
     user: userReducer,
     notification: notificationReducer,
     authorize: authorizeReducer,

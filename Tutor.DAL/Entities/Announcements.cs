@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Tutor.DAL.Entities
 {
@@ -8,16 +7,15 @@ namespace Tutor.DAL.Entities
     {
         public int Id { get; set; }
 
-        public int UserID { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
-
+        public string Location { get; set; }
+        public decimal Price { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Subjects Subject { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public DateTime PublishDate { get; set; }
 
+        public ICollection<AnnouncementDates> Dates { get; set; }
 
     }
 }

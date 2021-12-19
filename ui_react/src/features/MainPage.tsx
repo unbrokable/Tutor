@@ -424,21 +424,6 @@ const MainPage = () => {
           </button>
         </div>
       </div>
-      <div style={{ paddingTop: "3em" }}>
-        <p style={{ fontSize: "30px", fontWeight: 700, paddingLeft: "7.3em" }}>
-          StudyAll
-        </p>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <a style={{ fontSize: "30px" }}>About Us</a>
-          <a style={{ fontSize: "30px" }}>Registration</a>
-          <a style={{ fontSize: "30px" }}>Find a tutor</a>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <a style={{ fontSize: "30px" }}>Mobile App</a>
-          <a style={{ fontSize: "30px" }}>All reviews</a>
-          <a style={{ fontSize: "30px" }}>Become tutor</a>
-        </div>
-      </div>
     </>
   );
 };
