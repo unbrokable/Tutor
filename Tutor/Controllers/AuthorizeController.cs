@@ -12,6 +12,7 @@ using Tutor.DAL.Entities;
 using Tutor.JWT;
 using Tutor.Models.Authorize;
 using Tutor.Services;
+using System.Web;
 
 namespace Tutor.Controllers
 {
@@ -24,14 +25,16 @@ namespace Tutor.Controllers
         private readonly IAuthorizationService _authorizationService;
         private readonly IImageHandler imageHandler;
         private readonly IConfiguration _configuration;
+        private readonly IRandomPassword _randomPassword;
 
-        public AuthorizeController(ApplicationContext dataBase, IImageHandler imageHandler, IMapper mapper, IAuthorizationService authorizationService, IConfiguration _configuration)
+        public AuthorizeController(ApplicationContext dataBase, IImageHandler imageHandler, IMapper mapper, IAuthorizationService authorizationService, IConfiguration _configuration, IRandomPassword _randomPassword)
         {
             this._dataBase = dataBase;
             this._mapper = mapper;
             this._authorizationService = authorizationService;
             this.imageHandler = imageHandler;
             this._configuration = _configuration;
+            this._randomPassword = _randomPassword;
         }
 
         [HttpPost("login")]
@@ -76,7 +79,7 @@ namespace Tutor.Controllers
                     Email = googleUser.Email,
                     FirstName = googleUser.Name,
                     LastName = googleUser.FamilyName,
-                    Password = "12345",
+                    Password = _randomPassword.GetRandomPassword(),
                     Image = googleUser.Picture,
                     Role = RoleType.Student,
                     Phone = ""
