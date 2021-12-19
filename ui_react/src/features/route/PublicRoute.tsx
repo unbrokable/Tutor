@@ -3,7 +3,7 @@ import { jwtService } from "../../app/jwtService";
 
 const PublicRoute = ({ component: Component, ...rest }: any) => {
   const token = jwtService.get();
-  const history: any = useHistory();
+  const history = useHistory();
   return (
     <Route
       {...rest}

@@ -4,9 +4,8 @@ import loginReducer from "./slice/authorize/loginSlice";
 import authorizeReducer from "./slice/AuthorizeSlice";
 import userReducer from "./slice/userSlice";
 import notificationReducer from "./slice/notificationSlice";
-import announcementCreateReducer from "./slice/tutor/AnnouncementCreateSlice";
-
-import announcementsReducer from "./slice/tutor/AnnouncementsSlice";
+import announcementCreateReducer from "../app/slice/tutor/AnnouncementCreateSlice";
+import announcementsReducer from "../app/slice/tutor/AnnouncementsSlice";
 
 import { errorMiddleware } from "./middleware/errorMiddleware";
 import { authorizeMiddleware } from "./middleware/authorizeMiddleware";

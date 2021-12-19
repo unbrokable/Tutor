@@ -9,8 +9,9 @@ import PrivateRoute from "./features/route/PrivateRoute";
 import PublicRoute from "./features/route/PublicRoute";
 import CustomSider from "./features/Sider/CustomSider";
 import Cabinet from "./features/Cabinet";
-import Announcements from "./features/tutor/Announcements";
 import AnnouncementCreate from "./features/tutor/AnnouncementCreate";
+import Announcements from "./features/tutor/Announcements";
+import CustomFooter from "./features/Footer";
 
 const App = () => {
   return (
@@ -20,9 +21,15 @@ const App = () => {
           <Header>
             <CustomMenu />
           </Header>
-          <Layout>
+          <Layout style={{ minHeight: "500px" }}>
             {<CustomSider />}
-            <Content style={{ padding: "20px 50px" }}>
+
+            <Content
+              style={{
+                padding: "20px 50px",
+                backgroundColor: "orange",
+              }}
+            >
               <Switch>
                 <PublicRoute path="/main">
                   <MainPage />
@@ -47,10 +54,14 @@ const App = () => {
                 </PublicRoute>
               </Switch>
             </Content>
-            <Footer style={{ textAlign: "center" }}>
-              {/* Ant Design ©2018 Created by Ant UED */}
-            </Footer>
           </Layout>
+          <Footer
+            style={{
+              backgroundColor: "black",
+            }}
+          >
+            <CustomFooter />
+          </Footer>
         </Layout>
       </Router>
     </>

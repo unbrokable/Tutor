@@ -8,6 +8,8 @@ export const authorizeMiddleware =
     try {
       if (!jwtService.get() && action.type !== setAuthorize.type) {
         dispatch(setAuthorize(false));
+      } else if (jwtService.get() && action.type !== setAuthorize.type) {
+        dispatch(setAuthorize(true));
       }
     } catch {
     } finally {

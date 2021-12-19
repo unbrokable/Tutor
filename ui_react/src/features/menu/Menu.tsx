@@ -47,13 +47,15 @@ const CustomMenu = () => {
 
   return (
     <>
-      {state.isAuthorize ? null : <Redirect to="/main" />}
+      {/* {state.isAuthorize ? null : <Redirect to="/main" />} */}
       {!!notifications.errorMessage ? openErrorNotification() : null}
       {!!notifications.message ? openNotification() : null}
 
       <Menu theme="dark" mode="horizontal" direction="rtl">
-        <Menu.Item disabled>
-          <span style={{ color: "white", fontSize: "18px" }}>Study all</span>
+        <Menu.Item>
+          <Link style={{ fontSize: "18px" }} to="/main">
+            Study all
+          </Link>
         </Menu.Item>
         {jwtService.get() || state.isAuthorize ? (
           <>
