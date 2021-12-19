@@ -19,9 +19,10 @@ const Login = () => {
     <>
       {authorize ? <Redirect to="/cabinet" /> : null}
       <Form
+        style={{ paddingTop: "6em" }}
         name="basic"
         labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
+        wrapperCol={{ span: 8 }}
         initialValues={{ remember: true }}
         onFinish={() => dispatch(loginThunk())}
         // autoComplete="off"
