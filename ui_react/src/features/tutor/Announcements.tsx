@@ -4,6 +4,7 @@ import { useHistory, useRouteMatch } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   loadAnnouncementsAsync,
+  removeAnnouncementsAsync,
   selectAnnouncements,
 } from "../../app/slice/tutor/AnnouncementsSlice";
 
@@ -26,12 +27,22 @@ const Announcements = () => {
       </Row>
       {state.announcements?.map((a) => (
         <Card
+          extra={
+            <Button
+              onClick={() => {
+                dispatch(removeAnnouncementsAsync(a.id));
+              }}
+              danger
+            >
+              Remove
+            </Button>
+          }
           style={{ margin: "10px" }}
-          title={"Announcement id" + a.id}
+          title={"Announcement Id " + a.id}
           bordered={false}
         >
           <h3>{a.user}</h3>
-          <p>{a.description}</p>
+          <p>Description: {a.description}</p>
           <p>Price: {a.price}</p>
         </Card>
       ))}

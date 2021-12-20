@@ -6,6 +6,7 @@ import {
   loadSubjects,
 } from "../../api/functionsAPI/announcementAPI";
 import { setMessage } from "../notificationSlice";
+import { setAnnouncements, selectAnnouncements } from "./AnnouncementsSlice";
 
 export enum Days {
   SUNDAY,
@@ -116,6 +117,8 @@ export const loadAnnouncementThunk = (): AppThunk => (dispatch, getState) => {
   dispatch(addAnnouncementAsync(state)).then((act) => {
     if (act.type.endsWith("fulfilled")) {
       dispatch(setMessage("Announcement is added"));
+      const annon = selectAnnouncements(getState()).announcements;
+      dispatch(setAnnouncements([...annon!, act.payload]));
       dispatch(setIsAdded(true));
     }
   });

@@ -1,5 +1,4 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import { Redirect } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { GoogleLogin, GoogleLoginResponse } from "react-google-login";
 import {
@@ -9,15 +8,15 @@ import {
   setEmail,
   setPassword,
 } from "../../app/slice/authorize/loginSlice";
-import { selectAuthorize } from "../../app/slice/AuthorizeSlice";
+import RedirectToMain from "../route/RedirectToMain";
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector(selectLogin);
-  const authorize = useAppSelector(selectAuthorize).isAuthorize;
   return (
     <>
-      {authorize ? <Redirect to="/cabinet" /> : null}
+      <RedirectToMain />
+      <h3 style={{ textAlign: "center" }}>Login</h3>
       <Form
         style={{ paddingTop: "6em" }}
         name="basic"

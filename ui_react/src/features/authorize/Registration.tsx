@@ -13,18 +13,17 @@ import {
   setRegistrationRole,
 } from "../../app/slice/authorize/registrationSlice";
 import Password from "antd/lib/input/Password";
-import { Redirect } from "react-router";
-import { RoleType, selectAuthorize } from "../../app/slice/AuthorizeSlice";
+import RedirectToMain from "../route/RedirectToMain";
+import { RoleType } from "../../app/slice/AuthorizeSlice";
 
 const { Option } = Select;
 const Registration = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector(selectRegistration);
-  const authorize = useAppSelector(selectAuthorize).isAuthorize;
   return (
     <>
-      {authorize ? <Redirect to="/cabinet" /> : null}
-      <h3>Registration new cabinet</h3>
+      <RedirectToMain />
+      <h3 style={{ textAlign: "center" }}>Registration new cabinet</h3>
       <Form
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 8 }}
