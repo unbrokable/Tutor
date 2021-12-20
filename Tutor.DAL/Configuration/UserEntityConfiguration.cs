@@ -33,12 +33,8 @@ namespace Tutor.DAL.Configuration
 
             builder.Property(i => i.Education)
                 .HasMaxLength(150);
-
-            builder.Property(i => i.Phone)
-                .IsRequired();
-
-            
-                
+            builder
+                .HasQueryFilter(i => !i.IsDeleted);
         }
     }
 }

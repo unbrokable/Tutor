@@ -29,6 +29,7 @@ namespace Tutor
             });
 
             services.AddTransient<IAuthorizationService, AuthorizationService>();
+            services.AddTransient<IRandomPassword, RandomPassword>();
             services.AddTransient<IImageHandler, AzureImageHandler>();
 
             services.AddAutoMapper(typeof(Startup));

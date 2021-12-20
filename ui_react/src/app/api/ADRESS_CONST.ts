@@ -13,3 +13,8 @@ export const USER_API = HOST_API + "user";
 export const ANNOUNCEMENT_API = HOST_API + "Announcement";
 
 export const SUBJECT_API = HOST_API + "Announcement/subjects";
+
+// admin
+
+export const ADMIN_USERS_API = HOST_API + "admin/users";
+export const ADMIN_REMOVEUSERS_API = HOST_API + "admin/users/removes";

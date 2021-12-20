@@ -67,7 +67,7 @@ namespace Tutor.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("password")]
         public async Task<UserViewModel> ResetPassword()
         {
             var userEmail = User.GetEmail();
@@ -81,7 +81,7 @@ namespace Tutor.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("password")]
         public async Task<UserViewModel> ResetPassword([FromForm] UserUpdateViewModel userUpdateView)
         {
             var userEmail = User.GetEmail();

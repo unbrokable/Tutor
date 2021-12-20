@@ -1,6 +1,7 @@
 import { jwtService } from "../../app/jwtService";
 import {
   resertUser,
+  RoleType,
   selectAuthorize,
   setAuthorize,
   setRole,
@@ -12,7 +13,7 @@ import {
   setMessage,
 } from "../../app/slice/notificationSlice";
 import { Button, Menu, notification } from "antd";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -58,6 +59,11 @@ const CustomMenu = () => {
         </Menu.Item>
         {jwtService.get() || state.isAuthorize ? (
           <>
+            {state.role === RoleType[RoleType.Admin] ? (
+              <Menu.Item>
+                <Link to="/users">Users</Link>
+              </Menu.Item>
+            ) : null}
             <Menu.Item>
               <Button
                 type="text"
