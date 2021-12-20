@@ -2,13 +2,14 @@ import { Button, Col, Row, Select, Steps, TimePicker } from "antd";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-  addAnnouncementAsync,
   addAnnouncementDate,
   Days,
+  loadAnnouncementThunk,
   loadSubjectsAsync,
   removeAnnouncementDate,
   selectAnnouncementCreate,
   setDescription,
+  setIsAdded,
   setLocation,
   setOrder,
   setPrice,
@@ -17,6 +18,7 @@ import {
 } from "../../app/slice/tutor/AnnouncementCreateSlice";
 import { Input } from "antd";
 import moment from "moment";
+import { Redirect, useRouteMatch } from "react-router";
 
 const { TextArea } = Input;
 const { Step } = Steps;
@@ -29,8 +31,10 @@ const AnnouncementCreate = () => {
       title: "Choose subject",
       content: (
         <Select
+          size="large"
+          style={{ width: "100%", margin: "10px 0" }}
           value={state.subjectId}
-          placeholder="Select"
+          placeholder="Select Subject"
           onChange={(e) => dispatch(setSubject(e))}
         >
           {state.subjects?.map((subj) => (
@@ -43,6 +47,9 @@ const AnnouncementCreate = () => {
       title: "Description",
       content: (
         <TextArea
+          size="large"
+          style={{ width: "100%", margin: "10px 0" }}
+          placeholder="Describe you announcement"
           value={state.description}
           rows={4}
           onChange={(e) => dispatch(setDescription(e.target.value))}
@@ -53,6 +60,9 @@ const AnnouncementCreate = () => {
       title: "Location",
       content: (
         <Input
+          style={{ width: "100%", margin: "10px 0" }}
+          size="large"
+          placeholder="City or address"
           value={state.location}
           onChange={(e) => dispatch(setLocation(e.target.value))}
         />
@@ -64,39 +74,43 @@ const AnnouncementCreate = () => {
         <>
           {state.dates?.map((d, index) => {
             return (
-              <Row>
+              <Row gutter={[16, 16]}>
                 <Col>
                   <TimePicker.RangePicker
                     value={[moment(d.startTime), moment(d.endTime)]}
                     onChange={(e) => {
-                      dispatch(
-                        updateAnnouncementDate(
-                          {
-                            ...d,
-                            startTime: e![0]!.toDate().toString(),
-                            endTime: e![1]!.toDate().toString(),
-                          },
-                          index
-                        )
-                      );
+                      if (e && e[0] && e[1])
+                        dispatch(
+                          updateAnnouncementDate(
+                            {
+                              ...d,
+                              startTime: e[0].toDate().toString(),
+                              endTime: e[1].toDate().toString(),
+                            },
+                            index
+                          )
+                        );
                     }}
                   />
                 </Col>
-                <Select
-                  value={d.day}
-                  placeholder="Select"
-                  onChange={(e) =>
-                    dispatch(updateAnnouncementDate({ ...d, day: e }, index))
-                  }
-                >
-                  {Object.keys(Days)
-                    .filter((value) => typeof Days[+value] === "string")
-                    .map((day, index) => (
-                      <Option value={+day}>{Days[+day]}</Option>
-                    ))}
-                </Select>
+                <Col>
+                  <Select
+                    value={d.day}
+                    placeholder="Select"
+                    onChange={(e) =>
+                      dispatch(updateAnnouncementDate({ ...d, day: e }, index))
+                    }
+                  >
+                    {Object.keys(Days)
+                      .filter((value) => typeof Days[+value] === "string")
+                      .map((day, index) => (
+                        <Option value={+day}>{Days[+day]}</Option>
+                      ))}
+                  </Select>
+                </Col>
                 <Col>
                   <Button
+                    danger
                     onClick={() => dispatch(removeAnnouncementDate(index))}
                   >
                     Remove
@@ -109,6 +123,13 @@ const AnnouncementCreate = () => {
           <Row>
             <Col>
               <Button
+                type="dashed"
+                style={{
+                  width: "100px",
+                  backgroundColor: "green",
+                  color: "white",
+                  margin: "10px 0",
+                }}
                 onClick={() =>
                   dispatch(
                     addAnnouncementDate({
@@ -130,6 +151,9 @@ const AnnouncementCreate = () => {
       title: "Price",
       content: (
         <Input
+          placeholder="Enter price please"
+          style={{ width: "100%", margin: "10px 0" }}
+          size="large"
           type={"number"}
           value={state.price}
           onChange={(e) => dispatch(setPrice(+e.target.value))}
@@ -151,8 +175,15 @@ const AnnouncementCreate = () => {
       dispatch(loadSubjectsAsync());
     }
   }, [state.subjects, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setIsAdded(false));
+    };
+  });
   return (
     <>
+      {state.isAdded ? <Redirect to={`/announcement`} /> : null}
       <Steps current={state.order}>
         {steps.map((item) => (
           <Step key={item.title} title={item.title} />
@@ -169,14 +200,19 @@ const AnnouncementCreate = () => {
           <Button
             type="primary"
             onClick={() => {
-              dispatch(addAnnouncementAsync(state));
+              dispatch(loadAnnouncementThunk());
             }}
           >
             Done
           </Button>
         )}
         {state.order > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+          <Button
+            style={{ margin: "0 8px" }}
+            type="primary"
+            danger
+            onClick={() => prev()}
+          >
             Previous
           </Button>
         )}

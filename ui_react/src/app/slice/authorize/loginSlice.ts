@@ -64,8 +64,8 @@ export const selectLogin = (state: RootState) => state.login;
 export const loginThunk = (): AppThunk => (dispatch, getState) => {
   const state = selectLogin(getState());
   dispatch(loginAsync(state)).then((a) => {
+    debugger;
     if (a.type.endsWith("fulfilled")) {
-      debugger;
       dispatch(setAuthorize(true));
       dispatch(setRole(a.payload.role));
     }

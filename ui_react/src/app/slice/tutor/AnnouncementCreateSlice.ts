@@ -5,6 +5,7 @@ import {
   addAnnouncement,
   loadSubjects,
 } from "../../api/functionsAPI/announcementAPI";
+import { setMessage } from "../notificationSlice";
 
 export enum Days {
   SUNDAY,
@@ -32,10 +33,12 @@ export interface AnnouncementCreateState {
   price?: number;
   order: number;
   dates?: Array<AnnouncementDateElement>;
+  isAdded: boolean;
 }
 
 const initialState: AnnouncementCreateState = {
-  order: 1,
+  order: 0,
+  isAdded: true,
 };
 
 export const addAnnouncementAsync = createAsyncThunk(
@@ -77,6 +80,9 @@ export const announcementCreateSlice = createSlice({
     setPrice: (state, { payload }: PayloadAction<number>) => {
       state.price = payload;
     },
+    setIsAdded: (state, { payload }: PayloadAction<boolean>) => {
+      state.isAdded = payload;
+    },
     setDate: (
       state,
       { payload }: PayloadAction<Array<AnnouncementDateElement>>
@@ -98,11 +104,22 @@ export const {
   setSubject,
   setOrder,
   setDate,
+  setIsAdded,
 } = announcementCreateSlice.actions;
 
 export const selectAnnouncementCreate = (state: RootState) =>
   state.announcementCreate;
 export default announcementCreateSlice.reducer;
+
+export const loadAnnouncementThunk = (): AppThunk => (dispatch, getState) => {
+  const state = selectAnnouncementCreate(getState());
+  dispatch(addAnnouncementAsync(state)).then((act) => {
+    if (act.type.endsWith("fulfilled")) {
+      dispatch(setMessage("Announcement is added"));
+      dispatch(setIsAdded(true));
+    }
+  });
+};
 
 export const addAnnouncementDate =
   (date: AnnouncementDateElement): AppThunk =>
