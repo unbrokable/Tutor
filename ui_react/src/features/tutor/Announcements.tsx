@@ -25,7 +25,11 @@ const Announcements = () => {
         </Button>
       </Row>
       {state.announcements?.map((a) => (
-        <Card title={"Announcement id" + a.id} bordered={false}>
+        <Card
+          style={{ margin: "10px" }}
+          title={"Announcement id" + a.id}
+          bordered={false}
+        >
           <h3>{a.user}</h3>
           <p>{a.description}</p>
           <p>Price: {a.price}</p>
