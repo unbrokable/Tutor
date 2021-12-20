@@ -41,6 +41,8 @@ namespace Tutor.Controllers
                 .Map<UserViewModel>(user);
        }
 
+
+
         [Authorize]
         [HttpPost]
         public async Task<UserViewModel> Update([FromForm] UserUpdateViewModel userUpdateView)
@@ -54,6 +56,43 @@ namespace Tutor.Controllers
             if (userUpdateView.Image != null)
             {
                 user.Image = await imageHandler.SaveAsync(userUpdateView.Image);
+            }
+
+            user = user.Update(userUpdateView);
+
+            await applicationContext.SaveChangesAsync();
+
+            return mapper
+                .Map<UserViewModel>(user);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<UserViewModel> ResetPassword()
+        {
+            var userEmail = User.GetEmail();
+
+            var user = await applicationContext
+                .Users
+                .FirstOrDefaultAsync(i => i.Email == userEmail);
+
+            return mapper
+                .Map<UserViewModel>(user);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<UserViewModel> ResetPassword([FromForm] UserUpdateViewModel userUpdateView)
+        {
+            var userEmail = User.GetEmail();
+
+            var user = await applicationContext
+                .Users
+                .FirstOrDefaultAsync(i => i.Email == userEmail);
+
+            if (userUpdateView.Password != null)
+            {
+                user.Password = userUpdateView.Password;
             }
 
             user = user.Update(userUpdateView);
