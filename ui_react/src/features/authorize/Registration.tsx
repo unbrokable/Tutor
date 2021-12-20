@@ -26,7 +26,7 @@ const Registration = () => {
       {authorize ? <Redirect to="/cabinet" /> : null}
       <h3>Registration new cabinet</h3>
       <Form
-        labelCol={{ span: 2 }}
+        labelCol={{ span: 8 }}
         wrapperCol={{ span: 8 }}
         onFinish={() => dispatch(registrateThunk())}
       >
@@ -116,7 +116,7 @@ const Registration = () => {
             }
           />
         </Form.Item>
-        <Form.Item>
+        <Form.Item wrapperCol={{ offset: 8 }}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
