@@ -19,6 +19,8 @@ namespace Tutor.Infrastructure.Profiles
             // create separate profile 
             
             CreateMap<User, UserViewModel>();
+            CreateMap<User, UserAdminViewModel>();
+          
             CreateMap<Announcements, AnnouncementViewModel>()
                 .ForMember(i => i.Subject, j => j.MapFrom(j => j.Subject.Name))
                 .ForMember(i => i.User, j => j.MapFrom(j => j.User.FirstName + " " + j.User.LastName));

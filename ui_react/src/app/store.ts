@@ -6,12 +6,15 @@ import userReducer from "./slice/userSlice";
 import notificationReducer from "./slice/notificationSlice";
 import announcementCreateReducer from "../app/slice/tutor/AnnouncementCreateSlice";
 import announcementsReducer from "../app/slice/tutor/AnnouncementsSlice";
-
+import userAddReducer from "../app/slice/admin/userAddSlice";
+import usersReducer from "../app/slice/admin/usersSlice";
 import { errorMiddleware } from "./middleware/errorMiddleware";
 import { authorizeMiddleware } from "./middleware/authorizeMiddleware";
 
 export const store = configureStore({
   reducer: {
+    users: usersReducer,
+    userAdd: userAddReducer,
     announcements: announcementsReducer,
     announcementCreate: announcementCreateReducer,
     user: userReducer,

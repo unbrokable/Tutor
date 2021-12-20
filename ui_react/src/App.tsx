@@ -12,6 +12,7 @@ import Cabinet from "./features/Cabinet";
 import AnnouncementCreate from "./features/tutor/AnnouncementCreate";
 import Announcements from "./features/tutor/Announcements";
 import CustomFooter from "./features/Footer";
+import Users from "./features/admin/Users";
 
 const App = () => {
   return (
@@ -48,6 +49,9 @@ const App = () => {
                 </PrivateRoute>
                 <PrivateRoute path="/changepassword">
                   Password reset
+                </PrivateRoute>
+                <PrivateRoute path="/users">
+                  <Users />
                 </PrivateRoute>
                 <PublicRoute path="/registration">
                   <Registration />

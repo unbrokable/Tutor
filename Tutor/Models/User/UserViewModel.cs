@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tutor.Models.User
+﻿namespace Tutor.Models.User
 {
     // change in future 
     public class UserViewModel

@@ -25,6 +25,7 @@ namespace Tutor.DAL.Entities
         public string Phone { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
+        public bool IsDeleted { get; set; }
 
         public IList<CreditCards> CreditCards { get; set; }
         public IList<Announcements> Announcements { get; set; }
